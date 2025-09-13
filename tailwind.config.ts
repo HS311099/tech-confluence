@@ -47,6 +47,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Cyberpunk theme colors
+        cyber: {
+          violet: "hsl(var(--cyber-violet))",
+          cyan: "hsl(var(--cyber-cyan))",
+          purple: "hsl(var(--cyber-purple))",
+          blue: "hsl(var(--cyber-blue))",
+          pink: "hsl(var(--cyber-pink))",
+        },
+        glass: {
+          bg: "hsl(var(--glass-bg))",
+          border: "hsl(var(--glass-border))",
+          shadow: "hsl(var(--glass-shadow))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -62,6 +75,27 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        mono: ["JetBrains Mono", "Consolas", "Monaco", "monospace"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+      },
+      backgroundImage: {
+        'gradient-cyber': 'var(--gradient-cyber)',
+        'gradient-glass': 'var(--gradient-glass)',
+        'gradient-hero': 'var(--gradient-hero)',
+      },
+      boxShadow: {
+        'glow': 'var(--shadow-glow)',
+        'cyan-glow': 'var(--shadow-cyan-glow)',
+        'glass': 'var(--shadow-glass)',
+        'neon': 'var(--shadow-neon)',
+      },
+      backdropBlur: {
+        xs: '2px',
+      },
+      scale: {
+        '102': '1.02',
       },
       keyframes: {
         "accordion-down": {
@@ -80,10 +114,42 @@ export default {
             height: "0",
           },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '33%': { transform: 'translateY(-10px) rotate(1deg)' },
+          '66%': { transform: 'translateY(-5px) rotate(-1deg)' },
+        },
+        glow: {
+          '0%, 100%': { filter: 'drop-shadow(0 0 5px hsl(var(--cyber-violet) / 0.5))' },
+          '50%': { filter: 'drop-shadow(0 0 20px hsl(var(--cyber-violet) / 0.8))' },
+        },
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(30px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        'type': {
+          '0%': { width: '0ch' },
+          '100%': { width: '100%' },
+        },
+        'blink': {
+          '0%, 50%': { 'border-color': 'transparent' },
+          '51%, 100%': { 'border-color': 'hsl(var(--cyber-violet))' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'float': 'float 6s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+        'type': 'type 3s steps(30, end) forwards',
+        'blink': 'blink 1s infinite',
       },
     },
   },

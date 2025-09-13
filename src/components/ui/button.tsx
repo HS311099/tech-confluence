@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -15,6 +15,11 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Cyberpunk button variants - subtle and professional
+        cyber: "bg-gradient-to-r from-primary/80 to-secondary/80 text-white border border-primary/30 hover:from-primary hover:to-secondary hover:shadow-glow hover:scale-102 active:scale-95",
+        "cyber-outline": "border-2 border-primary/60 bg-transparent text-primary hover:bg-primary/10 hover:border-primary hover:shadow-glow active:scale-95",
+        "cyber-subtle": "bg-accent/30 text-accent-foreground border border-accent/40 hover:bg-accent/50 hover:shadow-sm hover:scale-102 active:scale-95",
+        "cyber-glass": "glass text-foreground hover:bg-glass-bg/80 hover:shadow-glass hover:scale-102 active:scale-95",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -39,24 +39,24 @@ export function Header() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? "glass" : "bg-transparent"
+      isScrolled ? "glass shadow-lg" : "bg-transparent"
     }`}>
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-2 md:gap-0">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-gradient-cyber rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">T</span>
           </div>
-          <span className="text-xl font-bold neon-text">TechFlow</span>
+          <span className="text-xl md:text-2xl font-bold neon-text tracking-wide">TechFlow</span>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-semibold text-foreground hover:text-primary transition-colors px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             >
               {item.label}
             </button>
@@ -70,7 +70,7 @@ export function Header() {
             variant="cyber-outline" 
             size="sm"
             onClick={() => scrollToSection("contact")}
-            className="hidden sm:inline-flex"
+            className="hidden sm:inline-flex font-semibold tracking-wide shadow-cyan-glow"
           >
             Get Started
           </Button>
@@ -89,13 +89,13 @@ export function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden glass border-t border-glass-border">
+        <div className="md:hidden glass border-t border-glass-border animate-fade-in-up">
           <nav className="container mx-auto px-4 py-4 space-y-3">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                className="block w-full text-left py-2 text-base font-semibold text-foreground hover:text-primary transition-colors rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 {item.label}
               </button>
@@ -104,7 +104,7 @@ export function Header() {
               variant="cyber-outline" 
               size="sm"
               onClick={() => scrollToSection("contact")}
-              className="w-full mt-4"
+              className="w-full mt-4 font-semibold tracking-wide shadow-cyan-glow"
             >
               Get Started
             </Button>

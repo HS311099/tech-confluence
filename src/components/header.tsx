@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Link, useLocation } from "react-router-dom"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -28,14 +29,14 @@ export function Header() {
     setIsMobileMenuOpen(false)
   }
 
-  const navItems = [
-    { label: "Home", id: "hero" },
-    { label: "About", id: "about" },
-    { label: "Services", id: "services" },
-    { label: "Work", id: "work" },
-    { label: "Team", id: "team" },
-    { label: "Contact", id: "contact" }
-  ]
+  const navLinks = [
+    { label: "Home", to: "/" },
+    { label: "About", to: "/about" },
+    { label: "Services", to: "/services" },
+    { label: "Portfolio", to: "/portfolio" },
+    { label: "Contact", to: "/contact" }
+  ];
+  const location = useLocation();
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -52,28 +53,29 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="text-sm font-semibold text-foreground hover:text-primary transition-colors px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          {navLinks.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={`text-sm font-semibold px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-colors text-foreground hover:text-primary ${location.pathname === item.to ? 'underline text-primary' : ''}`}
             >
               {item.label}
-            </button>
+            </Link>
           ))}
         </nav>
 
         {/* Actions */}
         <div className="flex items-center space-x-3">
           <ThemeToggle />
-          <Button 
-            variant="cyber-outline" 
-            size="sm"
-            onClick={() => scrollToSection("contact")}
-            className="hidden sm:inline-flex font-semibold tracking-wide shadow-cyan-glow"
-          >
-            Get Started
-          </Button>
+          <Link to="/contact" className="hidden sm:inline-flex">
+            <Button 
+              variant="cyber-outline" 
+              size="sm"
+              className="font-semibold tracking-wide shadow-cyan-glow"
+            >
+              Get Started
+            </Button>
+          </Link>
           
           {/* Mobile Menu Button */}
           <Button
@@ -91,23 +93,25 @@ export function Header() {
       {isMobileMenuOpen && (
         <div className="md:hidden glass border-t border-glass-border animate-fade-in-up">
           <nav className="container mx-auto px-4 py-4 space-y-3">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left py-2 text-base font-semibold text-foreground hover:text-primary transition-colors rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            {navLinks.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block w-full text-left py-2 text-base font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-colors text-foreground hover:text-primary ${location.pathname === item.to ? 'underline text-primary' : ''}`}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
-            <Button 
-              variant="cyber-outline" 
-              size="sm"
-              onClick={() => scrollToSection("contact")}
-              className="w-full mt-4 font-semibold tracking-wide shadow-cyan-glow"
-            >
-              Get Started
-            </Button>
+            <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="w-full mt-4 inline-block">
+              <Button 
+                variant="cyber-outline" 
+                size="sm"
+                className="w-full font-semibold tracking-wide shadow-cyan-glow"
+              >
+                Get Started
+              </Button>
+            </Link>
           </nav>
         </div>
       )}

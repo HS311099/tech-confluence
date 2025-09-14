@@ -1,3 +1,24 @@
+// Declare Calendly on window for TypeScript
+declare global {
+  interface Window {
+    Calendly?: any;
+  }
+}
+  // Calendly popup handler
+  const openCalendlyPopup = () => {
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({ url: "https://calendly.com/vandansheth374/project-strategy-session" });
+    } else {
+      // Load Calendly script if not present
+      const script = document.createElement("script");
+      script.src = "https://assets.calendly.com/assets/external/widget.js";
+      script.async = true;
+      script.onload = () => {
+        window.Calendly.initPopupWidget({ url: "https://calendly.com/vandansheth374/project-strategy-session" });
+      };
+      document.body.appendChild(script);
+    }
+  };
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"

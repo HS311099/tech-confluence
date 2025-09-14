@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Send, Mail, Phone, MapPin, Calendar, MessageSquare, Zap, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -7,6 +7,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
+
+// Declare Calendly on window for TypeScript
+declare global {
+  interface Window {
+    Calendly?: any;
+  }
+}
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -20,6 +27,55 @@ export function ContactSection() {
   })
 
   const { toast } = useToast()
+
+  const openCalendlyPopup = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    const url = `https://calendly.com/vandansheth374/project-strategy-session?background_color=${isDark ? '000000' : 'ffffff'}&text_color=${isDark ? 'ffffff' : '000000'}`;
+    
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({ url });
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://assets.calendly.com/assets/external/widget.js";
+      script.async = true;
+      script.onload = () => {
+        window.Calendly.initPopupWidget({ url });
+      };
+      document.body.appendChild(script);
+    }
+  };
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+
+    const style = document.createElement("style");
+    style.textContent = `
+      .calendly-overlay {
+        background: rgba(0, 0, 0, 0.8) !important;
+      }
+      .calendly-popup {
+        background: hsl(var(--background)) !important;
+        border: 1px solid hsl(var(--border)) !important;
+        border-radius: 12px !important;
+      }
+      .calendly-popup-content {
+        background: hsl(var(--background)) !important;
+        border-radius: 12px !important;
+      }
+      .calendly-popup iframe {
+        border-radius: 12px !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   const services = [
     "AI & Machine Learning",
@@ -303,22 +359,16 @@ export function ContactSection() {
             >
               <h3 className="text-xl font-bold mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <Button variant="cyber-outline" className="w-full justify-between">
+                <Button variant="cyber-outline" className="w-full justify-between" onClick={openCalendlyPopup}>
                   <span className="flex items-center">
                     <Calendar className="w-4 h-4 mr-2" />
                     Schedule a Call
                   </span>
                   <ArrowRight className="w-4 h-4" />
                 </Button>
-                <Button variant="cyber-outline" className="w-full justify-between">
-                  <span className="flex items-center">
-                    <Zap className="w-4 h-4 mr-2" />
-                    Free Consultation
-                  </span>
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
               </div>
             </motion.div>
+
 
             {/* Response Time */}
             <motion.div

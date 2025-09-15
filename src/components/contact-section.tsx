@@ -167,12 +167,12 @@ export function ContactSection() {
             Let's Build Something <span className="neon-text">Amazing</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Ready to transform your ideas into reality? Get in touch with our team 
-            and let's discuss how we can help you achieve your technology goals.
+            Ready to transform your vision into reality? Partner with our expert team 
+            to build scalable, innovative solutions that drive your business forward.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
           {/* Contact Form */}
           <div className="lg:col-span-2">
             <motion.div
@@ -191,7 +191,7 @@ export function ContactSection() {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Basic Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <Label htmlFor="name">Full Name *</Label>
                     <Input
@@ -253,7 +253,7 @@ export function ContactSection() {
                 </div>
 
                 {/* Budget & Timeline */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <Label className="mb-3 block">Budget Range</Label>
                     <div className="space-y-2">
@@ -320,7 +320,7 @@ export function ContactSection() {
           </div>
 
           {/* Contact Info & CTA */}
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Contact Methods */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}

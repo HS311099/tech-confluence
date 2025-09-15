@@ -24,6 +24,8 @@ import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Link, useLocation } from "react-router-dom"
+import { HiSparkles } from "react-icons/hi2"
+import { motion, AnimatePresence } from "framer-motion"
 import logo from "@/assets/logo.png"
 import blacklogo from "@/assets/blacklogo.png"
 
@@ -73,84 +75,168 @@ export function Header() {
   const location = useLocation();
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? "glass shadow-lg" : "bg-transparent"
-    }`}>
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-2 md:gap-0">
+    <motion.header 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? "glass shadow-2xl backdrop-blur-xl border-b border-white/10" : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <img 
-            src={isDark ? blacklogo : logo}
-            alt="TechFlow Logo"
-            className="w-8 h-8 rounded-lg"
-          />
-          <span className="text-xl md:text-2xl font-bold neon-text tracking-wide">TechFlow</span>
-        </div>
+        <motion.div 
+          className="flex items-center space-x-3"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="relative">
+            <img 
+              src={isDark ? blacklogo : logo}
+              alt="TechFlow Logo"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+            />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-pulse" />
+          </div>
+          <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent tracking-wide">
+            TechFlow
+          </span>
+        </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-          {navLinks.map((item) => (
-            <Link
+        <nav className="hidden lg:flex items-center space-x-1">
+          {navLinks.map((item, index) => (
+            <motion.div
               key={item.to}
-              to={item.to}
-              className={`text-sm font-semibold px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-colors text-foreground hover:text-primary ${location.pathname === item.to ? 'underline text-primary' : ''}`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.3 }}
             >
-              {item.label}
-            </Link>
+              <Link
+                to={item.to}
+                className={`relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 group ${
+                  location.pathname === item.to 
+                    ? 'text-primary bg-primary/10 shadow-lg shadow-primary/25' 
+                    : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                }`}
+              >
+                {item.label}
+                <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </Link>
+            </motion.div>
           ))}
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <ThemeToggle />
           <Link to="/contact" className="hidden sm:inline-flex">
-            <Button 
-              variant="cyber-outline" 
-              size="sm"
-              className="font-semibold tracking-wide shadow-cyan-glow"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Get Started
-            </Button>
+              <Button 
+                variant="cyber-outline" 
+                size="sm"
+                className="font-semibold tracking-wide shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 group"
+              >
+                <HiSparkles className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                Get Started
+              </Button>
+            </motion.div>
           </Link>
           
           {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          <motion.div
+            whileTap={{ scale: 0.9 }}
+            className="lg:hidden"
           >
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative overflow-hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <AnimatePresence mode="wait">
+                {isMobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X className="w-5 h-5" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="w-5 h-5" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Button>
+          </motion.div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden glass border-t border-glass-border animate-fade-in-up">
-          <nav className="container mx-auto px-4 py-4 space-y-3">
-            {navLinks.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block w-full text-left py-2 text-base font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-colors text-foreground hover:text-primary ${location.pathname === item.to ? 'underline text-primary' : ''}`}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden glass border-t border-white/10 backdrop-blur-xl overflow-hidden"
+          >
+            <nav className="container mx-auto px-4 sm:px-6 py-6 space-y-2">
+              {navLinks.map((item, index) => (
+                <motion.div
+                  key={item.to}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.3 }}
+                >
+                  <Link
+                    to={item.to}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`block w-full text-left py-3 px-4 text-base font-medium rounded-xl transition-all duration-300 ${
+                      location.pathname === item.to 
+                        ? 'text-primary bg-primary/10 shadow-lg shadow-primary/25' 
+                        : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.3 }}
+                className="pt-4"
               >
-                {item.label}
-              </Link>
-            ))}
-            <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="w-full mt-4 inline-block">
-              <Button 
-                variant="cyber-outline" 
-                size="sm"
-                className="w-full font-semibold tracking-wide shadow-cyan-glow"
-              >
-                Get Started
-              </Button>
-            </Link>
-          </nav>
-        </div>
-      )}
-    </header>
+                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="block w-full">
+                  <Button 
+                    variant="cyber-outline" 
+                    size="sm"
+                    className="w-full font-semibold tracking-wide shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300"
+                  >
+                    <HiSparkles className="w-4 h-4 mr-2" />
+                    Get Started
+                  </Button>
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   )
 }

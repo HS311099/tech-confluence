@@ -24,10 +24,23 @@ import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Link, useLocation } from "react-router-dom"
+import logo from "@/assets/logo.png"
+import blacklogo from "@/assets/blacklogo.png"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains('dark'))
+    }
+    checkTheme()
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,9 +79,11 @@ export function Header() {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-2 md:gap-0">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-cyber rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">T</span>
-          </div>
+          <img 
+            src={isDark ? blacklogo : logo}
+            alt="TechFlow Logo"
+            className="w-8 h-8 rounded-lg"
+          />
           <span className="text-xl md:text-2xl font-bold neon-text tracking-wide">TechFlow</span>
         </div>
 

@@ -45,9 +45,10 @@ export function Header() {
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-gradient-cyber rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">T</span>
+            <span className="text-white font-bold text-sm">C</span>
           </div>
-          <span className="text-xl md:text-2xl font-bold neon-text tracking-wide">TechFlow</span>
+          <span className="text-sm md:text-lg font-bold neon-text tracking-wide">COHERENT SOLUTION</span>
+          <span className="hidden lg:block text-xs text-muted-foreground font-medium">(IDEAS TO REALITY)</span>
         </div>
 
         {/* Desktop Navigation */}

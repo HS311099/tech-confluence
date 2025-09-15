@@ -99,7 +99,7 @@ export function Chatbot() {
     
     // Greeting responses
     if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
-      return "Hello! Welcome to TechFlow. I'm here to help you explore our tech services and get your project started. What brings you here today?"
+      return "Hello! Welcome to COHERENT SOLUTION. I'm here to help you explore our tech services and get your project started. What brings you here today?"
     }
     
     // Default response

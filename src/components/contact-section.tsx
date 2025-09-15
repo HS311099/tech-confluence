@@ -80,8 +80,8 @@ export function ContactSection() {
     {
       icon: Mail,
       label: "Email us",
-      value: "hello@techflow.dev",
-      action: "mailto:hello@techflow.dev"
+      value: "hello@coherentsolution.dev",
+      action: "mailto:hello@coherentsolution.dev"
     },
     {
       icon: Phone,
